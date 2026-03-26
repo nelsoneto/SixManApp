@@ -63,7 +63,13 @@ function HomeContent() {
 
         {isError && (
           <div className="rounded-xl border border-red-900/40 bg-red-950/20 p-6 text-center text-sm text-red-400">
-            {(error as Error)?.message ?? 'Erro ao carregar dados.'}
+            <strong>NBA API temporariamente indisponível.</strong>
+            <br />
+            Tente novamente em alguns minutos.
+            <br />
+            <span className="block pt-2 text-xs text-red-500/80">
+              {(error as Error)?.message ?? 'Erro ao carregar dados.'}
+            </span>
           </div>
         )}
 

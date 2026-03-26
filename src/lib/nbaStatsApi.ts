@@ -89,13 +89,34 @@ async function fetchStatsByRole(
   const params = buildBaseParams(season, seasonType, role);
   const url = `${NBA_STATS_BASE}/leaguedashplayerstats?${params.toString()}`;
 
-  const response = await fetch(url, {
-    headers: NBA_HEADERS,
-    cache: 'force-cache',
-  });
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      headers: NBA_HEADERS,
+      cache: 'force-cache',
+    });
+  } catch (err: any) {
+    console.error(`[NBA API fetch error/${role}] URL: ${url}, Network error:`, err);
+    throw new Error(`Falha de rede ao consultar a NBA Stats API (${role}): ${err?.message ?? err}`);
+  }
 
   if (!response.ok) {
-    throw new Error(`NBA Stats API error (${role}): ${response.status} ${response.statusText}`);
+    let errorText = '';
+    try {
+      errorText = await response.text();
+    } catch {
+      errorText = '[no-body]';
+    }
+    console.error(
+      `[NBA API HTTP error/${role}] URL: ${url}`,
+      response.status,
+      response.statusText,
+      'Body:',
+      errorText
+    );
+    throw new Error(
+      `NBA Stats API error (${role}): ${response.status} ${response.statusText} Body: ${errorText}`
+    );
   }
 
   const data: NBAStatsApiResponse = await response.json();
