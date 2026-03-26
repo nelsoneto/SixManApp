@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --color-base: #0a0a0f;
+  --color-card: #13131a;
+  --color-card-hover: #16161f;
+  --color-purple-neon: #c084fc;
+  --color-yellow-neon: #facc15;
+
+  --font-sans: "Inter", "system-ui", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: #0a0a0f;
+  color: #f1f5f9;
+}
+
+/* Scrollbar customizada */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #13131a;
+}
+::-webkit-scrollbar-thumb {
+  background: #3b0764;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7e22ce;
+}
+
+/* Animação de pulse neon para o pódio */
+@keyframes neon-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
